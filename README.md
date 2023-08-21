@@ -6,7 +6,16 @@ This repository contains a benchmark script for [llama.cpp](https://github.com/g
 
 See instructions for installing Python 3 on Linux [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install-linux.html).
 
-## Step 2: Install & Build Llama.cpp
+## Step 2: Install git
+
+Run the follow command:
+
+```
+sudo apt-get update
+sudo apt-get install git
+```
+
+## Step 3: Install & Build Llama.cpp
 
 Run the following commands:
 
@@ -16,13 +25,13 @@ cd llama.cpp
 make
 ```
 
-## Step 3: Install git-lfs
+## Step 4: Install git-lfs
 
 See instructions for installing git-lfs [here](https://github.com/git-lfs/git-lfs/blob/main/INSTALLING.md).
 
-## Step 4: Clone and configure this repository
+## Step 5: Clone and configure this repository
 
-Run the following commands (assuming the cwd is `llama.cpp` from step #2):
+Run the following commands (assuming the cwd is `llama.cpp` from step #3):
 
 ```
 cd ..
@@ -31,9 +40,9 @@ cd llama-cpp-benchmark
 pip3 install -r requirements.txt
 ```
 
-## Step 4: Install a GGML model from HuggingFace
+## Step 6: Install a GGML model from HuggingFace
 
-Find the binary you want to install on HuggingFace. Copy the link and run the following commands (assuming the cwd is `llama-cpp-benchmark` from step #4):
+Find the binary you want to install on HuggingFace. Copy the link and run the following commands (assuming the cwd is `llama-cpp-benchmark` from step #5):
 
 ```
 mkdir models
@@ -43,7 +52,7 @@ sudo apt install wget
 wget https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_0.bin
 ```
 
-## Step 5: Run the benchmark
+## Step 7: Run the benchmark
 
 Navigate back to the `llama-cpp-benchmark` repository root directory. Run the following command:
 
