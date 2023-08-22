@@ -7,6 +7,7 @@ This repository contains a benchmark script for [llama.cpp](https://github.com/g
 Run the following commands:
 
 ```
+sudo apt-get update
 sudo apt-get install python3.10
 sudo apt install python3-pip
 ```
@@ -16,7 +17,6 @@ sudo apt install python3-pip
 Run the follow command:
 
 ```
-sudo apt-get update
 sudo apt-get install git
 ```
 
@@ -44,7 +44,7 @@ Run the following commands (assuming the cwd is `llama.cpp` from step #3):
 
 ```
 cd ..
-https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
+git clone https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
 cd llama-cpp-benchmark
 pip3 install -r requirements.txt
 ```
