@@ -10,7 +10,7 @@ def main(
     top_p: float = 0.9,
     top_k: int = 100,
     max_gen_len: int = 512,
-    n_gpu_layers: int = -1
+    n_gpu_layers: int = 0
 ):
     # Load the model
     llm = Llama(model_path=model_path, n_gpu_layers=n_gpu_layers)
