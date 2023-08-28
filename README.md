@@ -29,7 +29,7 @@ sudo apt-get -y install cuda
 export PATH=/usr/local/cuda/bin:$PATH
 source ~/.bashrc
 
-# Step 3: Install python3-pip & git-lfs
+# Step 3: Install additional dependencies
 sudo apt-get install -y python3-pip git-lfs ninja-build
 
 #Step 4: Clone and build llama.cpp
