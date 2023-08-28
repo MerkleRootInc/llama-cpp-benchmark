@@ -2,6 +2,92 @@
 
 This repository contains a benchmark script for [llama.cpp](https://github.com/ggerganov/llama.cpp) using the [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) API. Please refer to this document for how to install a Llama model and run the benchmark script against it. This assumes installation on a Linux Debian-based distribution (like Ubuntu).
 
+# Setup Script Instructions
+
+## Step 1: Create the setup script
+
+Run the following command:
+
+```
+sudo vim setup.sh
+```
+
+Paste the following script:
+
+```
+#!/bin/bash
+
+# Step 1: Update apt repository and upgrade packages
+sudo apt-get update
+sudo apt-get -y upgrade
+
+# Step 2: Install CUDA keyring and CUDA
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+export PATH=/usr/local/cuda/bin:$PATH
+source ~/.bashrc
+
+# Step 3: Install python3-pip & git-lfs
+sudo apt-get install -y python3-pip git-lfs ninja-build
+
+#Step 4: Clone and build llama.cpp
+git clone --progress --verbose https://github.com/ggerganov/llama.cpp.git
+cd llama.cpp
+make LLAMA_CUBLAS=1
+
+# Step 5: Clone & configure llama.cpp repo
+cd ..
+git clone --progress --verbose https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
+cd llama-cpp-benchmark
+pip install -r requirements.txt
+
+# Step 6: Install a GGML model from HuggingFace
+mkdir models
+cd models
+git lfs install
+git clone --progress --verbose https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+
+# Step 7: Convert GGML model to GGUF
+cd ..
+cd ..
+cd llama.cpp
+pip install -r requirements.txt
+python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name llama-2-13b-chat-gguf --desc "GGUF converted from llama-2-13b-chat.ggmlv3.q4_0.bin"
+
+# Step 8: Run the benchmark
+cd ..
+cd llama-cpp-benchmark
+echo ""
+echo ""
+echo "Setup completed succussfully. Run the benchmark with the following command:"
+echo ""
+echo "python3 npcai_benchmark.py --model_path models/gguf_model.bin --n_gpu_layers 48"
+echo ""
+echo ""
+```
+
+Save and close the file.
+
+## Step 3: Make the file executable
+
+Run the following command:
+
+```
+sudo chmod u+x setup.sh
+```
+
+## Step 4: Run the setup script
+
+Run the following command:
+
+```
+sudo ./setup.sh
+```
+
+# Manual Setup Instructions
+
 ## Step 1: Install Python
 
 Run the following commands:
