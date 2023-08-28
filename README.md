@@ -61,10 +61,32 @@ sudo apt install wget
 wget https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_0.bin
 ```
 
-## Step 7: Run the benchmark
+*Update 8.28:* As of this date, the latest commit of the llama.cpp library requires a GGUF model format instead of GGML. TheBloke on HuggingFace has not yet added GGUF model versions, but has included a conversion script. To convert a downloaded GGML model to GGUF, run the following commands (assuming you are in the directory from the previous step):
+
+```
+cd ..
+cd ..
+cd llama.cpp
+pip3 install -r requirements.txt
+python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name <model_name> --desc <model_desc>
+```
+```
+
+## Step 7 (Optional):
+
+This step is required if running this model with GPU offloading. This assumes the instance has NVIDIA GPUs running. Run the following commands.
+
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+sudo apt install -y ninja-build
+```
+
+## Step 8: Run the benchmark
 
 Navigate back to the `llama-cpp-benchmark` repository root directory. Run the following command:
 
 ```
 python3 npcai_benchmark.py --model_path "models/<model_name>"
-```
