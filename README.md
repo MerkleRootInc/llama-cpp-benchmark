@@ -70,7 +70,6 @@ cd llama.cpp
 pip3 install -r requirements.txt
 python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name <model_name> --desc <model_desc>
 ```
-```
 
 ## Step 7 (Optional):
 
@@ -90,3 +89,10 @@ Navigate back to the `llama-cpp-benchmark` repository root directory. Run the fo
 
 ```
 python3 npcai_benchmark.py --model_path "models/<model_name>"
+```
+
+If you wish to offload layers to the GPU, run with the following commands:
+
+```
+python3 npcai_benchmark.py --model_path "models/<model_name>" --n_gpu_layers 48
+```
