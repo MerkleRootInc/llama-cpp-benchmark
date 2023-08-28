@@ -41,7 +41,7 @@ make LLAMA_CUBLAS=1
 cd ..
 git clone --progress --verbose https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
 cd llama-cpp-benchmark
-pip install -r requirements.txt
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install -r requirements.txt
 
 # Step 6: Install a GGML model from HuggingFace
 mkdir models
