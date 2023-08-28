@@ -47,7 +47,7 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 sudo pip install -r requirements.tx
 mkdir models
 cd models
 git lfs install
-sudo git clone --progress --verbose https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+wget https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_0.bin
 
 # Step 7: Convert GGML model to GGUF
 cd ..
