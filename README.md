@@ -20,7 +20,21 @@ Run the follow command:
 sudo apt-get install git
 ```
 
-## Step 3: Install & Build Llama.cpp
+## Step 3 (Optional):
+
+This step is required if running this model with GPU offloading. This assumes the instance has NVIDIA GPUs running. Run the following commands.
+
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+sudo apt install -y ninja-build
+export PATH=/usr/local/cuda/bin:$PATH
+source ~/.bashrc
+```
+
+## Step 4: Install & Build Llama.cpp
 
 Run the following commands:
 
@@ -41,7 +55,7 @@ If building to run with GPU offloading, instead run this command:
 make LLAMA_CUBLAS=1
 ```
 
-## Step 4: Install git-lfs
+## Step 5: Install git-lfs
 
 Run the following command:
 
@@ -49,7 +63,7 @@ Run the following command:
 sudo apt-get install git-lfs
 ```
 
-## Step 5: Clone and configure this repository
+## Step 6: Clone and configure this repository
 
 Run the following commands (assuming the cwd is `llama.cpp` from step #3):
 
@@ -60,7 +74,7 @@ cd llama-cpp-benchmark
 pip3 install -r requirements.txt
 ```
 
-## Step 6: Install a GGML model from HuggingFace
+## Step 7: Install a GGML model from HuggingFace
 
 Find the binary you want to install on HuggingFace. Copy the link and run the following commands (assuming the cwd is `llama-cpp-benchmark` from step #5):
 
@@ -80,18 +94,6 @@ cd ..
 cd llama.cpp
 pip3 install -r requirements.txt
 python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name <model_name> --desc <model_desc>
-```
-
-## Step 7 (Optional):
-
-This step is required if running this model with GPU offloading. This assumes the instance has NVIDIA GPUs running. Run the following commands.
-
-```
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get -y install cuda
-sudo apt install -y ninja-build
 ```
 
 ## Step 8: Run the benchmark
