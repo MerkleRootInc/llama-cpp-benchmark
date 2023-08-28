@@ -27,7 +27,18 @@ Run the following commands:
 ```
 git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
+```
+
+If building to run solely on CPU, run this command:
+
+```
 make
+```
+
+If building to run with GPU offloading, instead run this command:
+
+```
+make LLAMA_CUBLAS=1
 ```
 
 ## Step 4: Install git-lfs
