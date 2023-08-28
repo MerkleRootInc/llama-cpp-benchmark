@@ -27,34 +27,34 @@ sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
 sudo apt-get -y install cuda
 export PATH=/usr/local/cuda/bin:$PATH
-source ~/.bashrc
+sudo source ~/.bashrc
 
 # Step 3: Install additional dependencies
 sudo apt-get install -y python3-pip git-lfs ninja-build
 
 #Step 4: Clone and build llama.cpp
-git clone --progress --verbose https://github.com/ggerganov/llama.cpp.git
+sudo git clone --progress --verbose https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
-make LLAMA_CUBLAS=1
+sudo make LLAMA_CUBLAS=1
 
 # Step 5: Clone & configure llama.cpp repo
 cd ..
-git clone --progress --verbose https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
+sudo git clone --progress --verbose https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
 cd llama-cpp-benchmark
-CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install -r requirements.txt
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 sudo pip install -r requirements.txt
 
 # Step 6: Install a GGML model from HuggingFace
 mkdir models
 cd models
 git lfs install
-git clone --progress --verbose https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+sudo git clone --progress --verbose https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
 
 # Step 7: Convert GGML model to GGUF
 cd ..
 cd ..
 cd llama.cpp
-pip install -r requirements.txt
-python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name llama-2-13b-chat-gguf --desc "GGUF converted from llama-2-13b-chat.ggmlv3.q4_0.bin"
+sudo pip install -r requirements.txt
+sudo python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name llama-2-13b-chat-gguf --desc "GGUF converted from llama-2-13b-chat.ggmlv3.q4_0.bin"
 
 # Step 8: Run the benchmark
 cd ..
