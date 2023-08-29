@@ -17,48 +17,49 @@ Paste the following script:
 ```
 #!/bin/bash
 
-# Step 1: Update apt repository and upgrade packages
+# Step 1: Install python
 sudo apt-get update
-sudo apt-get -y upgrade
+sudo apt-get install python3.10
+sudo apt install python3-pip
 
 # Step 2: Install CUDA keyring and CUDA
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
 sudo apt-get -y install cuda
+sudo apt install -y ninja-build
 export PATH=/usr/local/cuda/bin:$PATH
-sudo source ~/.bashrc
+source ~/.bashrc
 
-# Step 3: Install additional dependencies
-sudo apt-get install -y python3-pip git-lfs ninja-build
-
-#Step 4: Clone and build llama.cpp
-sudo git clone --progress --verbose https://github.com/ggerganov/llama.cpp.git
+# Step 3: Clone and build llama.cpp
+git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
-sudo make LLAMA_CUBLAS=1
+make LLAMA_CUBLAS=1
 
-# Step 5: Clone & configure llama.cpp repo
+# Step 4: Install git-lfs
+sudo apt-get install git-lfs
+
+# Step 5: Clone & configure llama benchmarking repo
 cd ..
-sudo git clone --progress --verbose https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
+git clone https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
 cd llama-cpp-benchmark
-CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 sudo pip install -r requirements.txt
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip3 install -r requirements.txt
 
 # Step 6: Install a GGML model from HuggingFace
 mkdir models
 cd models
 git lfs install
+sudo apt install wget
 wget https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_0.bin
 
 # Step 7: Convert GGML model to GGUF
 cd ..
 cd ..
 cd llama.cpp
-sudo pip install -r requirements.txt
-sudo python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name llama-2-13b-chat-gguf --desc "GGUF converted from llama-2-13b-chat.ggmlv3.q4_0.bin"
+pip3 install -r requirements.txt
+python3 convert-llama-ggmlv3-to-gguf.py --input "../llama-cpp-benchmark/models/llama-2-13b-chat.ggmlv3.q4_0.bin" --output "../llama-cpp-benchmark/models/gguf_model.bin" --name llama-gguf --desc "GGUF converted model"
 
 # Step 8: Run the benchmark
-cd ..
-cd llama-cpp-benchmark
 echo ""
 echo ""
 echo "Setup completed succussfully. Run the benchmark with the following command:"
