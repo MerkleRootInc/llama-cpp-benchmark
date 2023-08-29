@@ -158,7 +158,7 @@ Run the following commands (assuming the cwd is `llama.cpp` from step #3):
 cd ..
 git clone https://github.com/NPCAI-Studio/llama-cpp-benchmark.git
 cd llama-cpp-benchmark
-pip3 install -r requirements.txt
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip3 install -r requirements.txt
 ```
 
 ## Step 7: Install a GGML model from HuggingFace
@@ -194,5 +194,5 @@ python3 npcai_benchmark.py --model_path "models/<model_name>"
 If you wish to offload layers to the GPU, run with the following commands:
 
 ```
-python3 npcai_benchmark.py --model_path "models/<model_name>" --n_gpu_layers 48
+python3 npcai_benchmark.py --model_path "models/<model_name>" --n_gpu_layers -1
 ```
